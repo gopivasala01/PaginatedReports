@@ -88,6 +88,7 @@ public class SendAttachmentInMail
          // Part two is attachment
          messageBodyPart = new MimeBodyPart();
          String filename = AppConfig.downloadPath+"_"+agentName+".xlsx";
+         System.out.println("FileName sending in mail"+filename);
          messageBodyPart.setFileName(new File(filename).getName());
          DataSource source = new FileDataSource(filename);
          messageBodyPart.setDataHandler(new DataHandler(source));
@@ -123,7 +124,9 @@ public class SendAttachmentInMail
          //delete the current file
          File file = new File(filename);
          file.delete();
-      } catch (MessagingException e) {
+      } catch (MessagingException e) 
+      {
+    	  e.printStackTrace();
          throw new RuntimeException(e);
       }
    }

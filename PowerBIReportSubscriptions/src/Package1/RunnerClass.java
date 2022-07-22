@@ -90,8 +90,8 @@ public class RunnerClass {
 	public static void main(String[] args) throws Exception
 	{
 		GetDataFromDatabase databaseClassObject =new  GetDataFromDatabase();
-	    databaseClassObject.getData();
-		System.out.println("Data exported from Database");
+	    //databaseClassObject.getData();
+		//System.out.println("Data exported from Database");
 		
 		runnerClassObject = new RunnerClass();
 		mailObject = new SendAttachmentInMail();
@@ -204,12 +204,25 @@ public class RunnerClass {
 		driver.findElement(Locators.excelButton).click();
 		Thread.sleep(10000);
 		// Rename the file name
-		
+		/*
 		File downloadPath = new File (AppConfig.downloadPath);
 		Thread.sleep(2000);
 		//File renamedFile = new File ("C:\\Gopi\\Automation\\Eclipse Workspace\\PowerBIReportSubscriptions\\externalFiles\\downloadFiles\\Marketing by LeasingAgent_"+agentName+".xlsx");
-		downloadPath.renameTo(new File (AppConfig.downloadPath+"_"+agentName+".xlsx"));
+		downloadPath.renameTo(new File (downloadPath+"_"+agentName+".xlsx"));
+		System.out.println("File path with name"+downloadPath);
 		//downloadPath.delete();
+		*/
+		File file = new File (AppConfig.downloadPath);
+		File  File2 = new File("C:\\Gopi\\Projects\\Property ware\\Paginated Reports\\"+"_"+agentName+".xlsx");
+		System.out.println(file.exists());
+		
+		java.io.FileWriter out= new java.io.FileWriter(File2, true /*append=yes*/);
+		
+		if(file.exists())
+		{
+			file.delete();
+		}
+		
 	}
 	
 	public void readDataFromExcel() throws Exception
@@ -252,13 +265,21 @@ public class RunnerClass {
 				Cell cell_Email = row_Email.getCell(1);
 				String emailText = cell_Email.toString();
 				System.out.println(emailText);
-				String agentEmail = runnerClassObject.getEmailfromText(emailText);
+				String agentEmail=null ;
+				try {
+				agentEmail = runnerClassObject.getEmailfromText(emailText);
+				}
+				catch(Exception e) {}
+				System.out.println("Agent Email ="+agentEmail);
 				
 				Cell cell_ManagerEmail = row_Email.getCell(4);
 				String emailText_Manager = cell_ManagerEmail.toString();
 				System.out.println(emailText);
-				String managerEmail = runnerClassObject.getEmailfromText(emailText_Manager);
-				
+				String managerEmail=null ;
+				try {
+				 managerEmail = runnerClassObject.getEmailfromText(emailText_Manager);
+				}catch(Exception e) {}
+					System.out.println("Agent Email ="+agentEmail);
 				mailObject.sendFileToMail(agentName,agentEmail,managerEmail);
 				
 				Row row_name = sheet.getRow(i);
@@ -270,7 +291,7 @@ public class RunnerClass {
 			}catch(Exception e1)
 				{
 					Row row_name = sheet.getRow(i);
-					Cell cell_name = row_name.createCell(2);
+					Cell cell_name = row_name.createCell(5);
 					cell_name.setCellValue("NA");
 					agentEmailFileOutputStream = new FileOutputStream(agentEmails);
 					workbook.write(agentEmailFileOutputStream);
@@ -287,6 +308,7 @@ public class RunnerClass {
 			}
 			
 			//workbook.write(agentEmailFileOutputStream);
+		}
 			workbook.close();
 			/*
 			Row row = sheet.getRow(i+1);
@@ -296,7 +318,6 @@ public class RunnerClass {
 			runnerClassObject.getEmailfromText(emailText);
 			
 			*/
-		}
 		for(int i=0;i<emailsList.size();i++)
 		{
 			System.out.println(emailsList.get(i));
@@ -304,15 +325,26 @@ public class RunnerClass {
 	}
 	public String getEmailfromText(String email)
 	{
-		Matcher m = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+").matcher(email);
+		/*Matcher m = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+").matcher(email);
 		System.out.println(m.matches());
 	    while (m.find()) 
 	    {
 	    	
-	        System.out.println(m.group(0));
+	        System.out.println(m.group());
 	        emailsList.add(m.group());
 	    }
+	    return m.group(0);*/
+	    
+		Pattern p = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+");
+		Matcher m = p.matcher(email);
+		//System.out.println(m.matches());
+		//m.matches();
+		if (m.find()) {
+		    String urlStr = m.group(0);
+		    System.out.println(urlStr);
+		}
 	    return m.group(0);
+	    
 	     // System.out.println(m);
 		//return m.group(0);
 	}
