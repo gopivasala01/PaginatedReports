@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,7 +93,7 @@ public class RunnerClass {
 	public static void main(String[] args) throws Exception
 	{
 		GetDataFromDatabase databaseClassObject =new  GetDataFromDatabase();
-	    //databaseClassObject.getData();
+	    databaseClassObject.getData();
 		//System.out.println("Data exported from Database");
 		
 		runnerClassObject = new RunnerClass();
@@ -213,11 +216,14 @@ public class RunnerClass {
 		//downloadPath.delete();
 		*/
 		File file = new File (AppConfig.downloadPath);
-		File  File2 = new File("C:\\Gopi\\Projects\\Property ware\\Paginated Reports\\"+"_"+agentName+".xlsx");
-		System.out.println(file.exists());
+		//File  File2 = new File("C:\\Gopi\\Automation\\Eclipse Workspace\\PowerBIReportSubscriptions\\externalFiles\\downloadFiles\\"+"Daily Marketing Report by Agent -"+agentName);
+		//System.out.println(file.exists());
 		
-		java.io.FileWriter out= new java.io.FileWriter(File2, true /*append=yes*/);
+		//java.io.FileWriter out= new java.io.FileWriter(File2, true /*append=yes*/);
 		
+		Path source = Paths.get(AppConfig.downloadPath);
+		
+		Files.move(source, source.resolveSibling("Daily Marketing Report by Agent - "+agentName+".xlsx"));
 		if(file.exists())
 		{
 			file.delete();
@@ -283,7 +289,7 @@ public class RunnerClass {
 				mailObject.sendFileToMail(agentName,agentEmail,managerEmail);
 				
 				Row row_name = sheet.getRow(i);
-				Cell cell_name = row_name.createCell(2);
+				Cell cell_name = row_name.createCell(5);
 				cell_name.setCellValue("Completed");
 				agentEmailFileOutputStream = new FileOutputStream(agentEmails);
 				workbook.write(agentEmailFileOutputStream);

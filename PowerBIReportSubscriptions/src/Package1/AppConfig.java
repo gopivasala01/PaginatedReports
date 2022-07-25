@@ -17,7 +17,7 @@ public class AppConfig
 	    public static String reportLink ="https://app.powerbi.com/groups/6004d0fc-1e55-4bcc-bb1b-f59c574f0490/rdlreports/c91c7fc0-4031-431f-9567-4e23ec8fe3ff?ctid=28d9afc0-cbcd-4941-b619-71bb044ee47c&rp:VWUnitsLeasesMarketedManagedPrimaryLeasingAgent=";
 	    public static String outlookURL = "http://email.beetlerim.com/";
 	    public static String userEmailsFilePath = "C:\\\\Gopi\\\\Projects\\\\Property ware\\\\Paginated Reports\\\\Agents Info.xlsx";
-	    public static String downloadPath = "C:\\Gopi\\Automation\\Eclipse Workspace\\PowerBIReportSubscriptions\\externalFiles\\downloadFiles\\Marketing by LeasingAgent.xlsx";
+	    public static String downloadPath = "C:\\Users\\ADMIN\\git\\repository\\PowerBIReportSubscriptions\\externalFiles\\downloadFiles\\Marketing by LeasingAgent.xlsx";
 	    public static String mailBody = "";
 	    public static String toEmail ="info@beetlerim.com";
 	    public static String fromEmail ="bireports@beetlerim.com";

@@ -65,8 +65,11 @@ public class SendAttachmentInMail
 
          // Set CC: header field of the header.
          message.setRecipients(Message.RecipientType.CC,
-            InternetAddress.parse("mahitha.r@beetlerim.com"));
+            InternetAddress.parse("amesa@homeriver.com"));
          
+         // Set CC: header field of the header.
+         message.setRecipients(Message.RecipientType.BCC,
+            InternetAddress.parse("sujana.t@beetlerim.com"));
          
          // Set Subject: header field
          String subject = "Daily Marketing Report by Agent - "+agentName;
@@ -87,7 +90,7 @@ public class SendAttachmentInMail
 
          // Part two is attachment
          messageBodyPart = new MimeBodyPart();
-         String filename = AppConfig.downloadPath+"_"+agentName+".xlsx";
+         String filename = "C:\\Users\\ADMIN\\git\\repository\\PowerBIReportSubscriptions\\externalFiles\\downloadFiles\\"+"Daily Marketing Report by Agent - "+agentName+".xlsx";
          System.out.println("FileName sending in mail"+filename);
          messageBodyPart.setFileName(new File(filename).getName());
          DataSource source = new FileDataSource(filename);
